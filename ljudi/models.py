@@ -14,8 +14,7 @@ class Zaposleni(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     nadredjeni = models.ForeignKey(
         'self',
-        on_delete=models.CASCADE, blank=True, null=True)
-    projekti = models.ManyToManyField('Projekat', through='Projekat_Zaposleni')
+        on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
         return self.ime_prezime
@@ -38,7 +37,7 @@ class Zaposleni(models.Model):
 
 class Projekat(models.Model):
     naziv = models.CharField(max_length=255)
-    zaposleni = models.ManyToManyField('Zaposleni', through='Projekat_Zaposleni')
+    zaposleni = models.ManyToManyField('Zaposleni', through='Projekat_Zaposleni', related_name='projekti')
 
     def __str__(self):
         return self.naziv
@@ -49,8 +48,8 @@ class Projekat(models.Model):
 
 
 class Projekat_Zaposleni(models.Model):
-    zaposleni = models.ForeignKey('Zaposleni', related_name='zaposleni')
-    projekat = models.ForeignKey('Projekat', related_name='projekti')
+    zaposleni = models.ForeignKey('Zaposleni', on_delete=models.PROTECT)
+    projekat = models.ForeignKey('Projekat', on_delete=models.PROTECT)
     od_datuma = models.DateField()
     do_datuma = models.DateField()
 
@@ -62,7 +61,7 @@ class Sredstvo_za_rad(models.Model):
     naziv = models.CharField(max_length=255)
     vrednost = models.DecimalField(max_digits=30, decimal_places=2)
     datum_kupovine = models.DateField()
-    zaposleni = models.ForeignKey('Zaposleni', related_name='zaposleni')
+    zaposleni = models.ForeignKey('Zaposleni', related_name='Sredstva_za_rad', on_delete=models.PROTECT)
     deo_sredstva = models.ManyToManyField('self', through="Deo_sredstva", symmetrical=False, related_name='je_deo')
 
     def __str__(self):
@@ -70,9 +69,9 @@ class Sredstvo_za_rad(models.Model):
 
 
 class Deo_sredstva(models.Model):
-    iz_sredstva = models.ForeignKey(Sredstvo_za_rad, related_name='iz_sredstva')
-    u_sredstvo = models.ForeignKey(Sredstvo_za_rad, related_name='u_sredstvo')
-    procenat_promene = models.DecimalField(max_digits=1, decimal_places=2)  # ovo bi trebalo da je procenat
+    iz_sredstva = models.ForeignKey(Sredstvo_za_rad, related_name='iz_sredstva', on_delete=models.PROTECT)
+    u_sredstvo = models.ForeignKey(Sredstvo_za_rad, related_name='u_sredstvo', on_delete=models.PROTECT)
+    procenat_promene = models.DecimalField(max_digits=3, decimal_places=2)  # ovo bi trebalo da je procenat
     vrednost = models.DecimalField(max_digits=30, decimal_places=2)
     datum_promene = models.DateField()
 
@@ -101,15 +100,19 @@ class Dani_odsustva(models.Model):
     Od_dana = models.DateField()
     Do_data = models.DateField()
     # Broj_dana = models.IntegerField()   kako ovo da bude kalkulativna kolona
-    dokument = models.ForeignKey('Importovan_dokument', related_name='dokument')
-    zaposleni = models.ForeignKey('Zaposleni', related_name='zaposleni')
-    tip = models.ForeignKey('Tip_odsustva', related_name='tip_odsustva')
+    dokument = models.ForeignKey('Importovan_dokument', related_name='dani_odsustva', on_delete=models.PROTECT)
+    zaposleni = models.ForeignKey('Zaposleni', related_name='dani_odsustva', on_delete=models.PROTECT)
+    tip = models.ForeignKey('Tip_odsustva', related_name='dani_odsustva', on_delete=models.PROTECT)
+
+    @property
+    def broj_dana(self):
+        return (self.Do_data - self.Od_dana).days
 
 
 class Template_resenja(models.Model):
     naziv = models.CharField(max_length=255)
     path = models.CharField(max_length=255)
-    tip = models.ForeignKey('Tip_odsustva', related_name='tip_odsustva')
+    tip = models.ForeignKey('Tip_odsustva', related_name='template', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.naziv
