@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from .forms import ZaposleniForm
 
@@ -7,19 +8,21 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
-class SredstvaZaRad(TemplateView):
+class SredstvaZaRadListView(ListView):
     template_name = 'sredstva_za_rad.html'
 
+class SredstvaZaRadDetailView(DetailView):
+    pass
 
-class Projekti(TemplateView):
+class Projekti(ListView):
     template_name = 'projekti.html'
 
 
-class Zaposleni(TemplateView):
+class Zaposleni(ListView):
     template_name = 'zaposleni.html'
 
 
-class Odsustva(TemplateView):
+class Odsustva(ListView):
     template_name = 'odsustva.html'
 
 
