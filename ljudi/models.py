@@ -62,7 +62,7 @@ class Sredstvo_za_rad(models.Model):
     vrednost = models.DecimalField(max_digits=30, decimal_places=2)
     datum_kupovine = models.DateField()
     zaposleni = models.ForeignKey('Zaposleni', related_name='Sredstva_za_rad', on_delete=models.PROTECT)
-    deo_sredstva = models.ManyToManyField('self', through="Deo_sredstva", symmetrical=False, related_name='je_deo')
+    deo_sredstva = models.ManyToManyField('self', through="Deo_sredstva", symmetrical=False, related_name='je_deo', blank=True)
 
     def __str__(self):
         return self.naziv
@@ -76,7 +76,7 @@ class Deo_sredstva(models.Model):
     datum_promene = models.DateField()
 
     def __str__(self):
-        return self.datum_promene
+        return self.datum_promene.strftime('%m/%d/%Y')
 
 
 class Importovan_dokument(models.Model):
@@ -100,7 +100,8 @@ class Dani_odsustva(models.Model):
     Od_dana = models.DateField()
     Do_data = models.DateField()
     # Broj_dana = models.IntegerField()   kako ovo da bude kalkulativna kolona
-    dokument = models.ForeignKey('Importovan_dokument', related_name='dani_odsustva', on_delete=models.PROTECT)
+    dokument = models.ForeignKey('Importovan_dokument', related_name='dani_odsustva', on_delete=models.PROTECT,
+                                 null=True, blank=True)
     zaposleni = models.ForeignKey('Zaposleni', related_name='dani_odsustva', on_delete=models.PROTECT)
     tip = models.ForeignKey('Tip_odsustva', related_name='dani_odsustva', on_delete=models.PROTECT)
 

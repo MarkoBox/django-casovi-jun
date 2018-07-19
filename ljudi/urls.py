@@ -13,5 +13,8 @@ urlpatterns = [
     path('zaposleni/', views.zaposleni_table_view, name='zaposleni'),
     path('zaposleni/dodaj_zaposlenog', views.zaposleni_new, name='dodaj_zaposlenog'),
     path('odsustva/', views.OdsustvaListView.as_view(), name='odsustva'),
+    # path('odsustva/dodaj', views.odsustva_new, name='odsustva_dodaj'),
+    path('odsustva/dodaj',
+         views.OdsustvaCreateView.as_view(), name='odsustva_dodaj'),
     #url(r'^$', views.zaposleni_new, name='dodaj_zaposlenog'),
 ]
