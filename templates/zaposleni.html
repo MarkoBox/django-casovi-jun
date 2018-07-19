@@ -4,9 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Zaposleni</title>
-
     </head>
     <body>
+    <form method="get" action="{% url 'dodaj_zaposlenog' %}">
+        <button type="submit">Dodaj zaposlenog</button>
+    </form>
     {% render_table table %}
     </body>
 {% endblock %}

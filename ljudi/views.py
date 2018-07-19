@@ -6,6 +6,7 @@ from .forms import ZaposleniForm
 from django_tables2 import RequestConfig
 from .table import ZaposleniTable
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 import csv
 
@@ -72,10 +73,10 @@ class OdsustvaListView(ListView):
 
 def zaposleni_new(request):
     if request.method == "POST":
-
         form = ZaposleniForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('zaposleni')
     else:
         form = ZaposleniForm()
     return render(request, 'dodaj_zaposlenog.html', {'pera': form})

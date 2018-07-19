@@ -11,6 +11,7 @@ urlpatterns = [
     path('sredstva_za_rad/export/csv', views.export_sredstva_csv, name='export_sredstva_csv'),
     path('projekti/', views.ProjektiListVIew.as_view(), name='projekti'),
     path('zaposleni/', views.zaposleni_table_view, name='zaposleni'),
+    path('zaposleni/dodaj_zaposlenog', views.zaposleni_new, name='dodaj_zaposlenog'),
     path('odsustva/', views.OdsustvaListView.as_view(), name='odsustva'),
     #url(r'^$', views.zaposleni_new, name='dodaj_zaposlenog'),
 ]
