@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Sredstva za rad</title>
-</head>
-<body>
-Sredstva za rad
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Sredstva za rad</title>
+    </head>
+    <body>
+    <form method="get" action="{% url 'dodaj_sredstvo' %}">
+        <button type="submit">Dodaj sredstvo</button>
+    </form>
+    <form method="get" action="{% url 'export_sredstva_csv' %}">
+        <button type="submit">Export to csv</button>
+    </form>
+    <ul>
+        {% for sredstvo in object_list %}
+            <li><a href="/sredstva_za_rad/{{ sredstvo.id }}">{{ sredstvo.naziv }}</a> kupljeno
+                dana {{ sredstvo.datum_kupovine|date }} cena: {{ sredstvo.vrednost }}</li>
+            <form method="get" action="{% url 'update_sredstvo' sredstvo.id %}">
+                <button type="submit">Update</button>
+            </form>
+            <button name="button">Delete</button>
+        {% empty %}
+            <li>Nema sredstava</li>
+            </ul>
+        {% endfor %}
+    </body>
 
 {% endblock %}
