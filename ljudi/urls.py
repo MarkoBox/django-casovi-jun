@@ -16,5 +16,6 @@ urlpatterns = [
     # path('odsustva/dodaj', views.odsustva_new, name='odsustva_dodaj'),
     path('odsustva/dodaj',
          views.OdsustvaCreateView.as_view(), name='odsustva_dodaj'),
-    #url(r'^$', views.zaposleni_new, name='dodaj_zaposlenog'),
+    path('upload_template', views.upload_template, name='template_resenja'),
+    # url(r'^$', views.zaposleni_new, name='dodaj_zaposlenog'),
 ]

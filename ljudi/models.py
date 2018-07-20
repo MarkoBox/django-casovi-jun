@@ -112,8 +112,10 @@ class Dani_odsustva(models.Model):
 
 class Template_resenja(models.Model):
     naziv = models.CharField(max_length=255)
-    path = models.CharField(max_length=255)
+    opis = models.CharField(max_length=255, blank=True, null=True)
+    document = models.FileField(upload_to='resenja/', null=True, blank=True)
     tip = models.ForeignKey('Tip_odsustva', related_name='template', on_delete=models.PROTECT)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.naziv

@@ -3,11 +3,14 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render
 from .models import *
-from .forms import ZaposleniForm, OdsustvaForm
+from .forms import ZaposleniForm, OdsustvaForm, TemplateResenjaForm
 from django_tables2 import RequestConfig
 from .table import ZaposleniTable
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
 
 import csv
 
@@ -46,9 +49,10 @@ def export_sredstva_csv(request):
     response['Content-Disposition'] = 'attachment; filename="sredstva.csv"'
 
     writer = csv.writer(response)
-    writer.writerow([field.name for field in Sredstvo_za_rad._meta.get_fields()]+['ime'])
+    writer.writerow([field.name for field in Sredstvo_za_rad._meta.get_fields()] + ['ime'])
 
-    sredstva = Sredstvo_za_rad.objects.all().values_list(*[field.name for field in Sredstvo_za_rad._meta.get_fields()]+['zaposleni__ime_prezime'])
+    sredstva = Sredstvo_za_rad.objects.all().values_list(
+        *[field.name for field in Sredstvo_za_rad._meta.get_fields()] + ['zaposleni__ime_prezime'])
     for sredstvo in sredstva:
         writer.writerow(sredstvo)
 
@@ -98,3 +102,14 @@ class OdsustvaCreateView(CreateView):
     success_url = '/odsustva'
     template_name = 'odsustva_dodaj_form.html'
     fields = ["zaposleni", "tip", "Od_dana", "Do_data"]
+
+
+def upload_template(request):
+    if request.method == 'POST':
+        form = TemplateResenjaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = TemplateResenjaForm()
+    return render(request, 'simple_upload.html', {'form': form})

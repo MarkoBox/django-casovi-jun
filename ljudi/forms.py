@@ -1,5 +1,5 @@
 from django import forms
-from .models import Zaposleni, Dani_odsustva, Sredstvo_za_rad
+from .models import Zaposleni, Dani_odsustva, Sredstvo_za_rad, Template_resenja
 
 
 class ZaposleniForm(forms.ModelForm):
@@ -12,6 +12,12 @@ class OdsustvaForm(forms.ModelForm):
     class Meta:
         model = Dani_odsustva
         fields = ["zaposleni", "tip", "Od_dana", "Do_data"]
+
+
+class TemplateResenjaForm(forms.ModelForm):
+    class Meta:
+        model = Template_resenja
+        fields = ('naziv', 'opis', 'document', 'tip')
 
 
 # class SredstvaZaRadCreateForm(forms.ModelForm):
