@@ -6,3 +6,4 @@ class ZaposleniTable(tables.Table):
     class Meta:
         model = Zaposleni
         template_name = 'django_tables2/bootstrap.html'
+

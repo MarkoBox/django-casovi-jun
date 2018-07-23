@@ -113,3 +113,4 @@ def upload_template(request):
     else:
         form = TemplateResenjaForm()
     return render(request, 'simple_upload.html', {'form': form})
+
