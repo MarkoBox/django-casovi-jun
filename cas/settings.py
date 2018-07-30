@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'cas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'MarkoBox',
-        'PASSWORD': 'Marko147852',
-        'HOST': 'django-db.cqlydqns0bzt.eu-central-1.rds.amazonaws.com',
+        'NAME': 'django-cas',
+        'USER': 'postgres',
+        'PASSWORD': '147852',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -130,5 +130,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
+# ovo mi je folder za fajlove
 MEDIA_URL = '/files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files')

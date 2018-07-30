@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 
 class Zaposleni(models.Model):
@@ -69,12 +70,16 @@ class Sredstvo_za_rad(models.Model):
         return self.naziv
 
 
+    def get_absolute_url(self):
+        return reverse('sredstvo_za_rad', kwargs={'pk': self.id})
+
+
 class Deo_sredstva(models.Model):
-    iz_sredstva = models.ForeignKey(Sredstvo_za_rad, related_name='iz_sredstva', on_delete=models.PROTECT)
-    u_sredstvo = models.ForeignKey(Sredstvo_za_rad, related_name='u_sredstvo', on_delete=models.PROTECT)
-    procenat_promene = models.DecimalField(max_digits=3, decimal_places=2)  # ovo bi trebalo da je procenat
-    vrednost = models.DecimalField(max_digits=30, decimal_places=2)
-    datum_promene = models.DateField()
+    iz_sredstva = models.ForeignKey(Sredstvo_za_rad, related_name='iz_sredstva', on_delete=models.PROTECT, null=True, blank=True)
+    u_sredstvo = models.ForeignKey(Sredstvo_za_rad, related_name='u_sredstvo', on_delete=models.PROTECT, null=True, blank=True)
+    procenat_promene = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)  # ovo bi trebalo da je procenat
+    vrednost = models.DecimalField(max_digits=30, decimal_places=2, null=True, blank=True)
+    datum_promene = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.datum_promene.strftime('%m/%d/%Y')

@@ -1,3 +1,4 @@
+from datatableview.views import DatatableView
 from django.urls import reverse
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -33,7 +34,7 @@ class SredstvaZaRadDetailView(DetailView):
 class SredstvaZaRadCreateView(CreateView):
     model = Sredstvo_za_rad
     template_name = 'sredstva_za_rad_create_form.html'
-    fields = ['naziv', 'vrednost', 'datum_kupovine', 'zaposleni', 'deo_sredstva']
+    fields = ['naziv', 'vrednost', 'datum_kupovine', 'zaposleni']
 
 
 # ne radi
@@ -114,3 +115,13 @@ def upload_template(request):
         form = TemplateResenjaForm()
     return render(request, 'simple_upload.html', {'form': form})
 
+
+def upload_odsustva(request):
+    if request.method == 'POST':
+        form = TemplateResenjaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = TemplateResenjaForm()
+    return render(request, 'upload_odsustva.html', {'form': form})

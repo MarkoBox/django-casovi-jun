@@ -1,10 +1,12 @@
-{% extends 'base.html' %}
+
 {% block content %}
+    {% load static %}
 
 <head>
     <title>Odsustva</title>
 </head>
 <body>
-Odsustva
+{% for odsustvo in object_list %}
+
 </body>
 {% endblock %}
