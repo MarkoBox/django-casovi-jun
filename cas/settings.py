@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ljudi',
-    'django_tables2'
+    'django_tables2',
+    'datatableview',
 ]
 
 MIDDLEWARE = [

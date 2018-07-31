@@ -40,7 +40,7 @@ class SredstvaZaRadCreateView(CreateView):
 # ne radi
 class SredstvaZaRadUpdateView(UpdateView):
     model = Sredstvo_za_rad
-    fields = ['naziv', 'vrednost', 'datum_kupovine', 'zaposleni', 'deo_sredstva']
+    fields = ['naziv', 'vrednost', 'datum_kupovine', 'zaposleni']
     template_name = 'Sredstvo_za_rad_update_form.html'
 
 

@@ -1,4 +1,4 @@
-
+{% extends 'base.html' %}
 {% block content %}
     {% load static %}
 
@@ -7,6 +7,12 @@
 </head>
 <body>
 {% for odsustvo in object_list %}
+    {{ odsustvo.Od_dana|date }}
+    {{ odsustvo.Do_data|date }}
+    {{ odsustvo.zaposleni }}
+{% empty %}
+    <li>Nema odsustva</li>
+{% endfor %}
 
 </body>
 {% endblock %}
