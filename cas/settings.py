@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ljudi',
     'django_tables2',
-    'datatableview',
 ]
 
 MIDDLEWARE = [

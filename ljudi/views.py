@@ -1,4 +1,4 @@
-from datatableview.views import DatatableView
+
 from django.urls import reverse
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
